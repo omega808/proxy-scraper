@@ -1,7 +1,7 @@
 # Proxy scraper and checker 
-Program that utilizes ProxyScrapper/Checker python program to push
-10 random proxies to the proxychains Kali program.
-Recycles proxies every hour using CRON
+Program that utilizes ProxyScrapper/Checker to push
+10 random proxies to Kali's proxychains program.
+Recycles proxies every hour using CRON.
 Must be using Kali Linux or similiar distro
 ## Installation
   
