@@ -5,8 +5,15 @@ import os
 
 #Checks if program has been run before
 #Program never run before run startup instructions
-
 if not os.path.exists('log.txt'):
+    REPLY = input("First time running, would you like to run this hourly[Y/n]")
+    
+    #Write to crontab to run program by root every hour
+    if ( REPLY == "Y" ):
+        print( "Writing to /etc/crontab .. ")
+        os.system(' sudo echo " @hourly root python3 ${PWD}/proxy_scraper_to_proxychains.py  " | sudo tee -a /etc/crontab ')
+        print("Done!")
+
     with open('log.txt','w') as f:
         f.write('0')
                    
@@ -37,7 +44,7 @@ os.system(" cat output.txt | head > formatted.txt ")
 ip_list = []
 port_list = []
 
-Rfile = open('test.txt', 'r')
+Rfile = open('formatted.txt', 'r')
 Wfile = open('/etc/proxychains4.conf', 'a')
 for line in Rfile.readlines():
     IP = line.split(':')[0]
@@ -48,7 +55,7 @@ for line in Rfile.readlines():
 Rfile.close()
 
 list_len = len(ip_list)
-for line in range(10):
+for line in range(list_len):
     Wfile.write('socks5 ' + str(ip_list[line]) + ' ' + str(port_list[line]))
 
 Wfile.close()
